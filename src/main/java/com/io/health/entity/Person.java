@@ -20,7 +20,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo_usuario", discriminatorType = DiscriminatorType.INTEGER)
+@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.INTEGER)
 public class Person implements Serializable {
 
     @Id
