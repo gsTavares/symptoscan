@@ -1,55 +1,28 @@
-package com.io.health.entity;
+package com.io.health.entity.dto;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.io.health.entity.Person;
 import com.io.health.entity.enumerated.Sex;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorColumn;
-import jakarta.persistence.DiscriminatorType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
-@Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.INTEGER)
-public class Person implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class PersonDTO {
+    
     private Long id;
-
-    @Column
-    @NotBlank(message = "Person's full name is required")
     private String fullName;
-
-    @Column
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
-
-    @Column
-    @NotNull(message = "Person's sex is required. If male or female doesn't satisfies you, choose OTHER option")
     private Sex sex;
-
-    @Column(unique = true)
-    @NotBlank(message = "Person's email address is required")
-    @Email(message = "Malformed e-mail address detected")
     private String email;
-
-    @Column
-    @NotBlank(message = "Person's password is required")
     private String password;
+    
+    public PersonDTO() {
+    }
 
-    public Person() {
+    public PersonDTO(Person person) {
+        this.id = person.getId();
+        this.fullName = person.getFullName();
+        this.birthDate = person.getBirthDate();
+        this.sex = person.getSex();
+        this.email = person.getEmail();
     }
 
     public Long getId() {
@@ -116,7 +89,7 @@ public class Person implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Person other = (Person) obj;
+        PersonDTO other = (PersonDTO) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
@@ -124,5 +97,6 @@ public class Person implements Serializable {
             return false;
         return true;
     }
-
+    
+    
 }
