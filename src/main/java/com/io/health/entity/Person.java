@@ -15,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -28,7 +29,7 @@ public class Person implements Serializable {
     private Long id;
 
     @Column
-    @NotBlank
+    @NotBlank(message = "Person's full name is required")
     private String fullName;
 
     @Column
@@ -36,15 +37,16 @@ public class Person implements Serializable {
     private LocalDate birthDate;
 
     @Column
-    @NotNull
+    @NotNull(message = "Person's sex is required. If male or female doesn't satisfies you, choose OTHER option")
     private Sex sex;
 
     @Column(unique = true)
-    @NotBlank
+    @NotBlank(message = "Person's email address is required")
+    @Email(message = "Malformed e-mail address detected")
     private String email;
 
     @Column
-    @NotBlank
+    @NotBlank(message = "Person's password is required")
     private String password;
 
     public Person() {
