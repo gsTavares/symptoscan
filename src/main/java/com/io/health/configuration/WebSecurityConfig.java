@@ -47,13 +47,14 @@ public class WebSecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.debug(false).ignoring().requestMatchers(HttpMethod.POST, "/health-io/patient")
-                .requestMatchers(HttpMethod.GET, "/health-io/person/validate-token");
+        return (web) -> web.debug(false).ignoring()
+                .requestMatchers(HttpMethod.GET, "/v3/api-docs/**", "/swagger-ui/**")
+                .requestMatchers(HttpMethod.POST, "/patient");
     }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
 }
