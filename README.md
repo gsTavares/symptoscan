@@ -1,5 +1,5 @@
 
-# Health.io
+# myHealth.io
 
 API used in the development of my Graduation Work
 
