@@ -57,6 +57,7 @@ public class DatasourceService {
                 try {
                     List<Disease> diseases = this.parseCsv(file.getInputStream(), Disease.class);
                     diseaseRepository.saveAll(diseases);
+                    diseaseRepository.removeDuplicated();
                     return apiResponse.ok(diseases, "Diseases saved sucessfull!");                  
                 } catch(IOException ioe) {
                     throw new IOException("Error while persisting diseases: " + ioe.getMessage());
