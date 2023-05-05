@@ -2,6 +2,8 @@ package com.io.health.entity;
 
 import java.io.Serializable;
 
+import com.opencsv.bean.CsvBindByName;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,8 +20,9 @@ public class Symptom implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    @NotBlank
+    @CsvBindByName
+    @Column
+    @NotBlank(message = "symptom description is required")
     private String description;
 
     public Symptom() {
