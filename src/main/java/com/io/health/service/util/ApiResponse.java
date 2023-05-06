@@ -1,5 +1,6 @@
 package com.io.health.service.util;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +26,14 @@ public class ApiResponse<T> {
         return ResponseEntity.ok().body(response);
     }
 
+    public ResponseEntity<ApiResponse<Collection<T>>> okGet(Collection<T> body, String message) {
+        ApiResponse<Collection<T>> response = new ApiResponse<>();
+        response.setStatus(HttpStatus.OK.value());
+        response.setBody(body);
+        response.setMessage(message);
+        return ResponseEntity.ok().body(response);
+    }
+
     public ResponseEntity<ApiResponse<T>> badRequest(String message) {
         ApiResponse<T> response = new ApiResponse<>();
         response.setStatus(HttpStatus.BAD_REQUEST.value());
@@ -34,6 +43,13 @@ public class ApiResponse<T> {
 
     public ResponseEntity<ApiResponse<T>> notFound(String message) {
         ApiResponse<T> response = new ApiResponse<>();
+        response.setStatus(HttpStatus.NOT_FOUND.value());
+        response.setMessage(message);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    public ResponseEntity<ApiResponse<Collection<T>>> notFoundGet(String message) {
+        ApiResponse<Collection<T>> response = new ApiResponse<>();
         response.setStatus(HttpStatus.NOT_FOUND.value());
         response.setMessage(message);
         return ResponseEntity.status(response.getStatus()).body(response);
