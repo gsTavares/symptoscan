@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import com.google.gson.reflect.TypeToken;
+
 @Component
 public class ApiResponse<T> {
 
@@ -16,6 +18,10 @@ public class ApiResponse<T> {
     private String message;
 
     public ApiResponse() {
+    }
+
+    public static <T>Class<? super ApiResponse<T>> getType() {
+        return new TypeToken<ApiResponse<T>>(){}.getRawType();
     }
 
     public ResponseEntity<ApiResponse<T>> ok(T body, String message) {
