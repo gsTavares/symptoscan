@@ -3,6 +3,8 @@ package com.io.health.resource;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,16 +27,11 @@ public class SymptomResource {
 
     @GetMapping
     @Operation(description = "List all symptoms available")
-    public ResponseEntity<ApiResponse<Collection<SymptomDTO>>> list() {
-        return symptomService.list();
+    public ResponseEntity<ApiResponse<Collection<SymptomDTO>>> list(
+            @RequestParam(name = "description", required = false, defaultValue = "") String description,
+            @RequestParam(name = "idLang", required = true) Long idLang,
+            @PageableDefault(page = 0, size = 10, sort = {"description"}) Pageable page) {
+        return symptomService.list(description, idLang, page);
     }
 
-    @GetMapping(value = "/translated")
-    @Operation(description = "Translate all symptoms from english to another language")
-    public ResponseEntity<ApiResponse<Object>> translateTo(
-        @RequestParam(name = "sourceLang", required = true, defaultValue = "en") String sourceLang,
-        @RequestParam(name = "targetLang", required = true, defaultValue = "pt") String targetLang
-    ) {
-        return symptomService.translateTo(sourceLang, targetLang);
-    }
 }
