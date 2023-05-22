@@ -1,5 +1,5 @@
 
-# myHealth.io
+# symptoscan
 
 API used in the development of my Graduation Work
 
@@ -13,6 +13,7 @@ presented by the patient
 ## Autors
 
 - [@gsTavares](https://www.github.com/gsTavares)
+- [@mateusscarin](https://github.com/mateusscarin)
 
 
 ## Stack
@@ -21,4 +22,4 @@ presented by the patient
 
 ## API Reference
 
-#### We're working...
+#### This project uses OpenApi and Swagger for endpoint documentation
