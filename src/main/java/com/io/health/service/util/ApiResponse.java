@@ -8,12 +8,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.google.gson.reflect.TypeToken;
 
 @Component
 public class ApiResponse<T> {
 
     private Integer status;
+    @JsonInclude(Include.NON_NULL)
     private T body;
     private String message;
 
