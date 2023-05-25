@@ -11,6 +11,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.io.health.security.util.JWTUtil;
 
 import jakarta.servlet.FilterChain;
@@ -43,12 +44,23 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         }
         String token = authorizationHeader.replace(TOKEN_PREFIX, "");
         UsernamePasswordAuthenticationToken authenticationToken = getAuthenticationToken(token);
+        if(authenticationToken == null) {
+            response.setStatus(403);
+            response.setContentType("application/json");
+            response.getWriter().append(json(request));
+            response.getWriter().flush();
+            return;
+        }
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         chain.doFilter(request, response);
     }
 
     private UsernamePasswordAuthenticationToken getAuthenticationToken(String token) {
-        if(JWT.decode(token).getExpiresAt().before(new Date())){
+        DecodedJWT decodedToken = JWT.decode(token);
+        if(decodedToken.getExpiresAt() == null) {
+            return null;
+        }
+        if(decodedToken.getExpiresAt().before(new Date())){
             return null;
         }
         String person = JWT.require(Algorithm.HMAC512(jwtUtil.getJwtSecret()))
